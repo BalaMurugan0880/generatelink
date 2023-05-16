@@ -32,7 +32,7 @@
                 $applicationFields = json_decode(html_entity_decode($item['applicationFields']), true);
             @endphp
 
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4 mt-4">
                 <div class="card-header">
                     <h5 class="card-title">Application Fields</h5>
                 </div>

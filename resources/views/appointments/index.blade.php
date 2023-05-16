@@ -32,9 +32,9 @@
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>Booking ID</th>
+                    <th>Appointment ID</th>
                     <th>Service ID</th>
-                    <th>Booking Date</th>
+                    <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
                     <th>Pick Up Location</th>
@@ -88,9 +88,9 @@
                 <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Booking ID</th>
+                    <th>Appointment ID</th>
                     <th>Service ID</th>
-                    <th>Booking Date</th>
+                    <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
                     <th>Pick Up Location</th>
