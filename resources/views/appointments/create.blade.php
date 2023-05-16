@@ -77,9 +77,9 @@
                                 <div class="form-group">
                                     <label>Pick-Up Location</label>
                                     <input type="text" name="pickup_location" id="pickup_location" class="form-control" placeholder="Enter a Location">
-                                    <input type="text" name="pickup_lat" id="pickup_lat" class="form-control" >
-                                    <input type="text" name="pickup_long" id="pickup_long" class="form-control" >
-                                    <input type="text" name="pickup_url" id="pickup_url" class="form-control" >
+                                    <input type="text" name="pickup_lat" id="pickup_lat" class="form-control" hidden>
+                                    <input type="text" name="pickup_long" id="pickup_long" class="form-control" hidden>
+                                    <input type="text" name="pickup_url" id="pickup_url" class="form-control" hidden>
                                 </div>
                             </div>
                         </div>
@@ -135,12 +135,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
+                                    <p class="marker-info">**Please drag the marker to get your exact location.</p>
                                     <div id="map2" style="height:400px;width:auto;"></div>
                                     <label>Drop-off Location</label>
                                     <input type="text" name="dropoff_location" id="dropoff_location" class="form-control" placeholder="Enter a Location">
-                                    <input type="text" name="dropoff_lat" id="dropoff_lat"  class="form-control" >
-                                    <input type="text" name="dropoff_long" id="dropoff_long" class="form-control" >
-                                    <input type="text" name="dropoff_url" id="dropoff_url" class="form-control" >
+                                    <input type="text" name="dropoff_lat" id="dropoff_lat"  class="form-control" hidden>
+                                    <input type="text" name="dropoff_long" id="dropoff_long" class="form-control" hidden>
+                                    <input type="text" name="dropoff_url" id="dropoff_url" class="form-control" hidden>
                                 </div>
                             </div>
                         </div>

@@ -32,12 +32,12 @@
                 <thead>
                 <tr>
                     <th>No</th>
+                    <th>Booking ID</th>
+                    <th>Service ID</th>
+                    <th>Booking Date</th>
                     <th>Requester Name</th>
-                    <th>Requester Designation</th>
-                    <th>Requester Contact</th>
-                    <th>Appointment Date</th>
                     <th>Appointment Time</th>
-                    <th>Pick-Up Location</th>
+                    <th>Pick Up Location</th>
                     <th>Customer Name</th>
                     <th>Customer Contact</th>
                     <th>Customer VRN</th>
@@ -49,48 +49,51 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($appointments as $appointment)
-                    <tr>
-                    <td>{{ ++$i }}</td>
-                    <td>{{ $appointment->req_name }}</td>
-                    <td>{{ $appointment->req_designation }}</td>
-                    <td>{{ $appointment->req_contact }}</td>
-                    <td>{{ $appointment->apt_date }}</td>
-                    <td>{{ $appointment->apt_time }}</td>
-                    <td>{{ $appointment->pickup_location }}</td>
-                    <td>{{ $appointment->customer_name }}</td>
-                    <td>{{ $appointment->customer_contact }}</td>
-                    <td>{{ $appointment->customer_vrn }}</td>
-                    <td>{{ $appointment->vehicle_make }}</td>
-                    <td>{{ $appointment->vehicle_model }}</td>
-                    <td>{{ $appointment->dropoff_location }}</td>
-                    <td>{{ $appointment->special_notes }}</td>
-                    <td>
-                        <form action="{{ route('appointments.destroy',$appointment->id) }}" method="POST">
+                    @foreach ($filteredAppointments as $filteredAppointment)
+                    @php
+                    $applicationFields = json_decode(html_entity_decode($filteredAppointment['applicationFields']), true);
+                    @endphp
+                            <tr>
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $filteredAppointment['id'] }}</td>
+                            <td>{{ $filteredAppointment['serviceId'] }}</td>
+                            <td>{{ isset($applicationFields['apt_date']) ? date('d/m/Y', strtotime($applicationFields['apt_date'])) : '-' }}</td>
+                            <td>{{ $applicationFields['req_name'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['apt_time'] ?? '-' }} </td>
+                            <td>{{ $applicationFields['pickup_location'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['customer_name'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['customer_contact'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['customer_vrn'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['vehicle_make'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['vehicle_model'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['dropoff_location'] ?? '-' }}</td>
+                            <td>{{ $applicationFields['special_notes'] ?? '-' }}</td>
+                            <td>
+                                <form action="{{ route('appointments.destroy',$filteredAppointment['id']) }}" method="POST">
 
-                            <a class="btn-xs btn-info" href="{{ route('appointments.show',$appointment->id) }}"><i class="fas fa-eye"></i></a>
+                                    <a class="btn-xs btn-info" href="{{ route('appointments.show',$filteredAppointment['id']) }}"><i class="fas fa-eye"></i></a>
 
-                            <a class="btn-xs btn-primary" href="{{ route('appointments.edit',$appointment->id) }}"><i class="far fa-edit"></i></a>
+                                    {{-- <a class="btn-xs btn-primary" href="{{ route('appointments.edit',$filteredAppointment['id']) }}"><i class="far fa-edit"></i></a>
 
-                            @csrf
-                            @method('DELETE')
+                                    @csrf
+                                    @method('DELETE')
 
-                            <button type="submit" class="btn-xs btn-danger" id="deleteButton"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="submit" class="btn-xs btn-danger" id="deleteButton"><i class="fas fa-trash-alt"></i></button> --}}
 
-                        </form>
-                    </td>
-                </tr>
+                                </form>
+                            </td>
+                        </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>No</th>
+                    <th>Booking ID</th>
+                    <th>Service ID</th>
+                    <th>Booking Date</th>
                     <th>Requester Name</th>
-                    <th>Requester Designation</th>
-                    <th>Requester Contact</th>
-                    <th>Appointment Date</th>
                     <th>Appointment Time</th>
-                    <th>Pick-Up Location</th>
+                    <th>Pick Up Location</th>
                     <th>Customer Name</th>
                     <th>Customer Contact</th>
                     <th>Customer VRN</th>
@@ -103,7 +106,7 @@
                 </tfoot>
               </table>
 
-            {!! $appointments->links() !!}
+            {{-- {!! $filteredAppointment->links() !!} --}}
         </div>
     </section>
 </div>

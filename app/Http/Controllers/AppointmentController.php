@@ -15,34 +15,36 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::latest()->paginate(5);
-        return view('appointments.index', compact('appointments'))->with('i', (request()->input('page', 1) - 1) * 5);
-        // $user = Auth::user();
-        // // dd($user->access_token);
-        // $response = Http::withOptions([
-        //     'verify' => false
-        // ])
-        // ->withBasicAuth('C54B5730DF624A58AF77C319FCE2FA93', '285eb345f5c6dbbc3d0d17f7350f039deedce7b6')
-        // ->withHeaders(['Access-Token' => $user->access_token])
-        // ->get('https://api.staging.europ-assistance.my/api/bookings');
-
-
-        // if ($response->successful()) {
-        // $appointments = $response->json();
-
-        // // dd($appointments);
-        // $serviceId = 24; // Replace with the service ID you want to filter
-        // $filteredAppointments = array_filter($appointments, function ($appointment) use ($serviceId) {
-        //     return $appointment['serviceId'] == $serviceId;
-        // });
-        // dd($filteredAppointments);
-
+        // $appointments = Appointment::latest()->paginate(5);
         // return view('appointments.index', compact('appointments'))->with('i', (request()->input('page', 1) - 1) * 5);
-        // } else {
-        // // Handle the API request failure
-        // $errorMessage = $response->json()['message'];
-        // return view('error', compact('errorMessage'));
-        // }
+        $user = Auth::user();
+        // dd($user->access_token);
+        $response = Http::withOptions([
+            'verify' => false
+        ])
+        ->withBasicAuth('C54B5730DF624A58AF77C319FCE2FA93', '285eb345f5c6dbbc3d0d17f7350f039deedce7b6')
+        ->withHeaders(['Access-Token' => $user->access_token])
+        ->get('https://api.staging.europ-assistance.my/api/bookings');
+
+
+        if ($response->successful()) {
+        $appointments = $response->json();
+
+        // dd($appointments);
+        $serviceId = 24; // Replace with the service ID you want to filter
+        $filteredAppointments = array_filter($appointments, function ($appointment) use ($serviceId) {
+            return $appointment['serviceId'] == $serviceId;
+        });
+
+
+
+
+        return view('appointments.index', compact('filteredAppointments'))->with('i', (request()->input('page', 1) - 1) * 5);
+        } else {
+        // Handle the API request failure
+        $errorMessage = $response->json()['message'];
+        return view('error', compact('errorMessage'));
+        }
     }
 
     /**
@@ -133,7 +135,7 @@ class AppointmentController extends Controller
         $responseBody = $response->getBody()->getContents();
 
 
-        dd($response);
+        // dd($response);
 
         if ($response->getStatusCode() === 200) {
             return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
@@ -146,9 +148,33 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Appointment $appointment)
+    public function show($appointment)
     {
-        return view('appointments.show', compact('appointment'));
+        $user = Auth::user();
+        // dd($user->access_token);
+        $response = Http::withOptions([
+            'verify' => false
+        ])
+        ->withBasicAuth('C54B5730DF624A58AF77C319FCE2FA93', '285eb345f5c6dbbc3d0d17f7350f039deedce7b6')
+        ->withHeaders(['Access-Token' => $user->access_token])
+        ->get('https://api.staging.europ-assistance.my/api/bookings');
+
+
+        if ($response->successful()) {
+        $appointments = $response->json();
+
+
+        // dd($appointments);
+        $id = $appointment;
+        $filteredAppointment = array_filter($appointments, function ($appointment) use ($id) {
+            return $appointment['id'] == $id;
+        });
+    }
+
+    // dd($filteredAppointment);
+
+
+        return view('appointments.show', compact('filteredAppointment'));
     }
 
     /**
