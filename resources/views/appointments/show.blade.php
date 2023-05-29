@@ -8,10 +8,10 @@
             <h1 class="m-0 text-dark">View Appointment</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{route('appointments.index')}}">Appointment</a></li>
-                <li class="breadcrumb-item active">View</li>
-            </ol>
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{route('appointments.index')}}">Appointment</a></li>
+                    <li class="breadcrumb-item active">View</li>
+                </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -27,27 +27,24 @@
                 </div>
             </div>
 
-            @foreach ($filteredAppointment as $item)
-            @php
-                $applicationFields = json_decode(html_entity_decode($item['applicationFields']), true);
-            @endphp
-
             <div class="card shadow mb-4 mt-4">
-                <div class="card-header">
-                    <h5 class="card-title">Application Fields</h5>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Application Fields</h5>
+                    <button id="copyDetailsBtn" class="btn btn-warning ml-auto"><i class="fas fa-clipboard"></i></button>
                 </div>
+
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Requester Name:</strong>
-                                {{ $applicationFields['req_name'] ?? '-' }}
+                                <p>{{ $appointment['req_name'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Customer Name:</strong>
-                                {{ $applicationFields['customer_name'] ?? '-' }}
+                                <p>{{ $appointment['customer_name'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -56,13 +53,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Requester Contact:</strong>
-                                <p>{{ $applicationFields['req_contact'] ?? '-' }}</p>
+                                <p>{{ $appointment['req_contact'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Customer Contact:</strong>
-                                <p>{{ $applicationFields['customer_contact'] ?? '-' }}</p>
+                                <p>{{ $appointment['customer_contact'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -71,13 +68,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Pick Up Address:</strong>
-                                <p>{{ $applicationFields['pickup_location'] ?? '-' }}</p>
+                                <p>{{ $appointment['pickup_location'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Drop off Address:</strong>
-                                <p>{{ $applicationFields['dropoff_location'] ?? '-' }}</p>
+                                <p>{{ $appointment['dropoff_location'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -86,13 +83,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Pick Up URL:</strong>
-                                <p id="url1">{{ $applicationFields['pickup_url'] ?? '-' }}</p>
+                                <p id="url1">{{ $appointment['pickup_url'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Drop Off URL:</strong>
-                                <p id="url2">{{ $applicationFields['dropoff_url'] ?? '-' }}</p>
+                                <p id="url2">{{ $appointment['dropoff_url'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -101,13 +98,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Appointment Date:</strong>
-                                <p>{{ $applicationFields['apt_date'] ?? '-' }}</p>
+                                <p>{{ $appointment['apt_date'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Appointment Time:</strong>
-                                <p>{{ $applicationFields['apt_time'] ?? '-' }}</p>
+                                <p>{{ $appointment['apt_time'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -116,13 +113,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Vehicle Registration Number:</strong>
-                                <p>{{ $applicationFields['customer_vrn'] ?? '-' }}</p>
+                                <p>{{ $appointment['customer_vrn'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Vehicle Make:</strong>
-                                <p>{{ $applicationFields['vehicle_make'] ?? '-' }}</p>
+                                <p>{{ $appointment['vehicle_make'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -131,23 +128,45 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Vehicle Model:</strong>
-                                <p>{{ $applicationFields['vehicle_model'] ?? '-' }}</p>
+                                <p>{{ $appointment['vehicle_model'] ?? '-' }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <strong>Special Notes:</strong>
-                                <p>{{ $applicationFields['special_notes'] ?? '-' }}</p>
+                                <p>{{ $appointment['special_notes'] ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
 
         </div>
     </section>
 </div>
+
+<script>
+    document.getElementById('copyDetailsBtn').addEventListener('click', function() {
+        var details = document.getElementsByClassName('card-body')[0].innerText;
+
+        // Create a textarea element and set its value to the details
+        var textarea = document.createElement('textarea');
+        textarea.value = details;
+
+        // Append the textarea to the document
+        document.body.appendChild(textarea);
+
+        // Copy the text from the textarea
+        textarea.select();
+        document.execCommand('copy');
+
+        // Remove the textarea from the document
+        document.body.removeChild(textarea);
+
+        // Alert the user that the details have been copied
+        toastr.success("Details Copied!");
+    });
+</script>
 
 <script>
     var url1 = document.getElementById("url1");

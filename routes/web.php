@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VehicleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +20,23 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
-Route::resource('appointments', AppointmentController::class);
+Route::group(['middleware' => 'role:admin'], function () {
+    Route::resource('status', StatusController::class);
+    Route::resource('vehicle', VehicleController::class);
+    Route::post('/vehicle/import', [VehicleController::class, 'importData'])->name('vehicle.importData');
+
+    Route::post('/status/{id}', [StatusController::class, 'update'])->name('status.update');
+
 });
+
+Route::group(['middleware' => 'role:admin,customer'], function () {
+    Route::resource('appointments', AppointmentController::class);
+});
+
+
+
+
+
 
 // Route::prefix('/admin')->namespace('App\Http\Controllers')->group(function(){
 //     Route::get('dashboard', 'AdminController@dashboard');

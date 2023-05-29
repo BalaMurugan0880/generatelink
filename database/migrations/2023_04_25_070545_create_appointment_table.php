@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('dropoff_long');
             $table->string('dropoff_url');
             $table->longText('special_notes')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

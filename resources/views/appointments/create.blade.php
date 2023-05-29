@@ -153,6 +153,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" name="status" id="status" value="Pending Approval" class="form-control" hidden>
                         <div class="row">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -305,58 +306,5 @@
 
   window.addEventListener('load', initDropoffMap);
 </script>
-
-{{-- Google Place Api --}}
-{{-- <script>
-    function initAutocomplete() {
-        // Initialize the autocomplete feature for pickup location
-        var pickupInput = document.getElementById('pickup_location');
-        var pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput, {
-            componentRestrictions: { country: 'my' } // Restrict to Malaysia
-        });
-
-        // Add event listener for when a user selects an address for pickup location
-        pickupAutocomplete.addListener('place_changed', function() {
-            var pickupPlace = pickupAutocomplete.getPlace();
-            if (!pickupPlace.geometry) {
-                window.alert("No details available for input: '" + pickupPlace.name + "'");
-                return;
-            }
-
-            // Populate the latitude and longitude fields with the coordinates of the selected place for pickup location
-            document.getElementById('pickup_lat').value = pickupPlace.geometry.location.lat();
-            document.getElementById('pickup_long').value = pickupPlace.geometry.location.lng();
-
-            var pickupMapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(pickupPlace.formatted_address);
-
-            // Populate the pickup_url field with the generated URL for pickup location
-            document.getElementById('pickup_url').value = pickupMapUrl;
-        });
-
-        // Initialize the autocomplete feature for dropoff location
-        var dropoffInput = document.getElementById('dropoff_location');
-        var dropoffAutocomplete = new google.maps.places.Autocomplete(dropoffInput, {
-            componentRestrictions: { country: 'my' } // Restrict to Malaysia
-        });
-
-        // Add event listener for when a user selects an address for dropoff location
-        dropoffAutocomplete.addListener('place_changed', function() {
-            var dropoffPlace = dropoffAutocomplete.getPlace();
-            if (!dropoffPlace.geometry) {
-                window.alert("No details available for input: '" + dropoffPlace.name + "'");
-                return;
-            }
-
-            // Populate the latitude and longitude fields with the coordinates of the selected place for dropoff location
-            document.getElementById('dropoff_lat').value = dropoffPlace.geometry.location.lat();
-            document.getElementById('dropoff_long').value = dropoffPlace.geometry.location.lng();
-
-            var dropoffMapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(dropoffPlace.formatted_address);
-
-            // Populate the dropoff_url field with the generated URL for dropoff location
-            document.getElementById('dropoff_url').value = dropoffMapUrl;
-        });
-    }
-</script> --}}
 
 @endsection

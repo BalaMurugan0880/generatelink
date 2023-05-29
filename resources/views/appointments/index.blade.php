@@ -33,7 +33,6 @@
                 <tr>
                     <th>No</th>
                     <th>Appointment ID</th>
-                    <th>Service ID</th>
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
@@ -50,24 +49,20 @@
                 </thead>
                 <tbody>
                     @foreach ($filteredAppointments as $filteredAppointment)
-                    @php
-                    $applicationFields = json_decode(html_entity_decode($filteredAppointment['applicationFields']), true);
-                    @endphp
                             <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $filteredAppointment['id'] }}</td>
-                            <td>{{ $filteredAppointment['serviceId'] }}</td>
-                            <td>{{ isset($applicationFields['apt_date']) ? date('d/m/Y', strtotime($applicationFields['apt_date'])) : '-' }}</td>
-                            <td>{{ $applicationFields['req_name'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['apt_time'] ?? '-' }} </td>
-                            <td>{{ $applicationFields['pickup_location'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['customer_name'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['customer_contact'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['customer_vrn'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['vehicle_make'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['vehicle_model'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['dropoff_location'] ?? '-' }}</td>
-                            <td>{{ $applicationFields['special_notes'] ?? '-' }}</td>
+                            <td>{{ isset($filteredAppointment['apt_date']) ? date('d/m/Y', strtotime($filteredAppointment['apt_date'])) : '-' }}</td>
+                            <td>{{ $filteredAppointment['req_name'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['apt_time'] ?? '-' }} </td>
+                            <td>{{ $filteredAppointment['pickup_location'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['customer_name'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['customer_contact'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['customer_vrn'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['vehicle_make'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['vehicle_model'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['dropoff_location'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['special_notes'] ?? '-' }}</td>
                             <td>
                                 <form action="{{ route('appointments.destroy',$filteredAppointment['id']) }}" method="POST">
 
@@ -89,7 +84,6 @@
                 <tr>
                     <th>No</th>
                     <th>Appointment ID</th>
-                    <th>Service ID</th>
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
@@ -106,7 +100,7 @@
                 </tfoot>
               </table>
 
-            {{-- {!! $filteredAppointment->links() !!} --}}
+            {!! $filteredAppointments->links() !!}
         </div>
     </section>
 </div>
