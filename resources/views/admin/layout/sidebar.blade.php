@@ -36,12 +36,12 @@
                       'title' => 'Status',
                       'roles' => ['admin'],
                   ],
-                //   [
-                //       'route' => 'vehicle.index',
-                //       'icon' => 'far fa-circle text-danger',
-                //       'title' => 'Vehicle',
-                //       'roles' => ['admin'],
-                //   ],
+                  [
+                      'route' => 'vehicle.index',
+                      'icon' => 'far fa-circle text-danger',
+                      'title' => 'Vehicle',
+                      'roles' => ['admin'],
+                  ],
                   // Add more menu items as needed
               ];
               @endphp
