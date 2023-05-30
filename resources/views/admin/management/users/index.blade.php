@@ -58,17 +58,17 @@
                                 <td>{{ $user->profile->dob ?? '-' }}</td>
                                 <td>{{ $user->is_active ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <form action="{{ route('appointments.destroy',$user['id']) }}" method="POST">
+                                <form action="{{ route('users.destroy',$user['id']) }}" method="POST">
 
                                     <a class="btn-xs btn-info" data-toggle="modal" data-target="#updateStatusModal" data-appointment-id="{{ $user['id'] }}"><i class="fas fa-eye"></i></a>
 
 
-                                    {{-- <a class="btn-xs btn-primary" href="{{ route('appointments.edit',$user['id']) }}"><i class="far fa-edit"></i></a>
+                                     <a class="btn-xs btn-primary" href="{{ route('users.edit',$user['id']) }}"><i class="far fa-edit"></i></a>
 
-                                    @csrf
+                                   @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn-xs btn-danger" id="deleteButton"><i class="fas fa-trash-alt"></i></button> --}}
+                                    <button type="submit" class="btn-xs btn-danger" id="deleteButton"><i class="fas fa-trash-alt"></i></button>
 
                                 </form>
                             </td>

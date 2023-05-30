@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_id');
+            $table->integer('user_id');
             $table->string('req_name');
             $table->string('req_designation');
             $table->string('req_contact');

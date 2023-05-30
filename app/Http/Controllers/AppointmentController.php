@@ -110,7 +110,6 @@ class AppointmentController extends Controller
             'dropoff_long' => 'required',
             'special_notes' => 'required',
             'status' => 'required',
-
         ]);
 
         $appointment->update($request->all());

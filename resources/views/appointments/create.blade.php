@@ -36,14 +36,14 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Requester Name</label>
-                                    <input type="text" name="req_name" class="form-control" placeholder="">
+                                    <input type="text" name="req_name" class="form-control" value="{{ auth()->user()->name ?? '' }}" placeholder="">
                                     <input type="text" name="user_id" class="form-control" value="{{ auth()->user()->id }}" hidden>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Requester Designation</label>
-                                    <input type="text" name="req_designation" class="form-control" placeholder="">
+                                    <input type="text" name="req_designation" value="{{ auth()->user()->profile->designation ?? '' }}" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -52,7 +52,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" name="req_contact" class="form-control" data-inputmask='"mask": "(60) 99-99999999"' data-mask>
+                                    <input type="text" name="req_contact" class="form-control" value="{{ auth()->user()->profile->phone_number ?? '' }}" data-inputmask='"mask": "(60) 99-99999999"' data-mask>
                                   </div>
                             </div>
                         </div>

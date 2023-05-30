@@ -83,24 +83,65 @@ class ManageUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.management.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,'.$user->id,
+            'password' => 'nullable',
+            'designation' => 'required',
+            'phone_number' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
+            'status' => 'required',
+        ]);
+
+        // Update user details
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->is_active = $request->status === 'on' ? 1 : 0;
+        if (!empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        // Update profile details
+        $profile = $user->profile;
+        $profile->designation = $request->designation;
+        $profile->phone_number = $request->phone_number;
+        $profile->gender = $request->gender;
+        $profile->dob = date('d/m/Y', strtotime($request->dob));
+        $profile->save();
+
+        if ($profile) {
+            return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update user.');
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        // Delete associated appointments
+        $user->appointments()->delete();
+
+        // Delete associated profile
+        $user->profile()->delete();
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }
