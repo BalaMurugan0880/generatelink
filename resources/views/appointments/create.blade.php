@@ -171,119 +171,92 @@
 <script>
     var map;
     var marker;
+    var autocomplete;
+    var userInteraction = false; // Flag to track user interaction
 
     function initMap() {
-    var initialLatLng = {lat: 3.1319, lng: 101.6841};
-    var mapOptions = {
+      var initialLatLng = { lat: 3.1319, lng: 101.6841 };
+      var mapOptions = {
         zoom: 13,
-        center: initialLatLng
-    };
+        center: initialLatLng,
+      };
 
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: initialLatLng,
         map: map,
-        draggable: true
-    });
+        draggable: true,
+      });
 
-    function updateLocation(latLng) {
-        document.getElementById('pickup_lat').value = latLng.lat();
-        document.getElementById('pickup_long').value = latLng.lng();
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('pickup_location'));
+      autocomplete.bindTo('bounds', map);
 
-        // Generate URL and get address for the new marker position
-        var url = "https://www.google.com/maps/search/?api=1&query=" + latLng.lat() + "," + latLng.lng();
-        document.getElementById('pickup_url').value = url;
+      autocomplete.addListener('place_changed', function () {
+        // Set the flag to false when the autocomplete selection changes the place
+        userInteraction = false;
 
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'location': latLng }, function(results, status) {
-        if (status === 'OK') {
-            if (results[0]) {
-            var addressComponents = results[0].address_components;
-            var address = '';
-            for (var i = 0; i < addressComponents.length; i++) {
-                var component = addressComponents[i];
-                if (component.types.includes('street_number') || component.types.includes('route')) {
-                address += component.long_name + ' ';
-                } else if (component.types.includes('locality')) {
-                address += component.long_name + ', ';
-                } else if (component.types.includes('administrative_area_level_1')) {
-                address += component.long_name + ', ';
-                } else if (component.types.includes('country')) {
-                address += component.long_name;
-                }
-            }
-            document.getElementById('pickup_location').value = address;
-            } else {
-            console.log('No results found');
-            }
-        } else {
-            console.log('Geocoder failed due to: ' + status);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+          console.log('Place details not found for the selected input');
+          return;
         }
-        });
-    }
 
-    google.maps.event.addListener(map, 'click', function(event) {
+        if (place.geometry.location) {
+          marker.setPosition(place.geometry.location);
+          map.panTo(place.geometry.location);
+          map.setZoom(13);
+          updateLocation(place.geometry.location);
+        }
+      });
+
+      google.maps.event.addListener(map, 'click', function (event) {
+        // Set the flag to true when the user manually clicks on the map
+        userInteraction = true;
+
         marker.setPosition(event.latLng);
         updateLocation(event.latLng);
-    });
+      });
 
-    google.maps.event.addListener(marker, 'dragend', function() {
+      google.maps.event.addListener(marker, 'dragend', function () {
+        // Set the flag to true when the user manually drags the marker
+        userInteraction = true;
+
         var latLng = marker.getPosition();
         updateLocation(latLng);
-    });
+      });
     }
 
-    window.addEventListener('load', initMap);
-</script>
-
-{{-- Drop OFF Location Map --}}
-<script>
-  var map2;
-  var marker2;
-
-  function initDropoffMap() {
-    var initialLatLng = {lat: 3.1319, lng: 101.6841};
-    var mapOptions = {
-      zoom: 13,
-      center: initialLatLng
-    };
-
-    map2 = new google.maps.Map(document.getElementById('map2'), mapOptions);
-
-    marker2 = new google.maps.Marker({
-      position: initialLatLng,
-      map: map2,
-      draggable: true
-    });
-
-    function updateDropoffLocation(latLng) {
-      document.getElementById('dropoff_lat').value = latLng.lat();
-      document.getElementById('dropoff_long').value = latLng.lng();
+    function updateLocation(latLng) {
+      document.getElementById('pickup_lat').value = latLng.lat();
+      document.getElementById('pickup_long').value = latLng.lng();
 
       // Generate URL and get address for the new marker position
-      var url = "https://www.google.com/maps/search/?api=1&query=" + latLng.lat() + "," + latLng.lng();
-      document.getElementById('dropoff_url').value = url;
+      var url = 'https://www.google.com/maps/search/?api=1&query=' + latLng.lat() + ',' + latLng.lng();
+      document.getElementById('pickup_url').value = url;
 
       var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ 'location': latLng }, function(results, status) {
+      geocoder.geocode({ 'location': latLng }, function (results, status) {
         if (status === 'OK') {
           if (results[0]) {
-            var addressComponents = results[0].address_components;
-            var address = '';
-            for (var i = 0; i < addressComponents.length; i++) {
-              var component = addressComponents[i];
-              if (component.types.includes('street_number') || component.types.includes('route')) {
-                address += component.long_name + ' ';
-              } else if (component.types.includes('locality')) {
-                address += component.long_name + ', ';
-              } else if (component.types.includes('administrative_area_level_1')) {
-                address += component.long_name + ', ';
-              } else if (component.types.includes('country')) {
-                address += component.long_name;
+            // Check the flag to determine whether to update the address
+            if (userInteraction) {
+              var addressComponents = results[0].address_components;
+              var address = '';
+              for (var i = 0; i < addressComponents.length; i++) {
+                var component = addressComponents[i];
+                if (component.types.includes('street_number') || component.types.includes('route')) {
+                  address += component.long_name + ' ';
+                } else if (component.types.includes('locality')) {
+                  address += component.long_name + ', ';
+                } else if (component.types.includes('administrative_area_level_1')) {
+                  address += component.long_name + ', ';
+                } else if (component.types.includes('country')) {
+                  address += component.long_name;
+                }
               }
+              document.getElementById('pickup_location').value = address;
             }
-            document.getElementById('dropoff_location').value = address;
           } else {
             console.log('No results found');
           }
@@ -293,18 +266,114 @@
       });
     }
 
-    google.maps.event.addListener(map2, 'click', function(event) {
-      marker2.setPosition(event.latLng);
-      updateDropoffLocation(event.latLng);
-    });
+    window.addEventListener('load', initMap);
+  </script>
 
-    google.maps.event.addListener(marker2, 'dragend', function() {
-      var latLng = marker2.getPosition();
-      updateDropoffLocation(latLng);
-    });
-  }
 
-  window.addEventListener('load', initDropoffMap);
-</script>
+
+{{-- Drop OFF Location Map --}}
+<script>
+    var map2;
+    var marker2;
+    var autocomplete2;
+
+    function initDropoffMap() {
+      var initialLatLng = { lat: 3.1319, lng: 101.6841 };
+      var mapOptions = {
+        zoom: 13,
+        center: initialLatLng
+      };
+
+      map2 = new google.maps.Map(document.getElementById('map2'), mapOptions);
+
+      marker2 = new google.maps.Marker({
+        position: initialLatLng,
+        map: map2,
+        draggable: true
+      });
+
+      autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('dropoff_location'));
+      autocomplete2.bindTo('bounds', map2);
+
+      autocomplete2.addListener('place_changed', function () {
+        // Set the flag to false when the autocomplete selection changes the place
+        userInteraction = false;
+
+        var place = autocomplete2.getPlace();
+        if (!place.geometry) {
+          console.log('Place details not found for the selected input');
+          return;
+        }
+
+        if (place.geometry.location) {
+          marker2.setPosition(place.geometry.location);
+          map2.panTo(place.geometry.location);
+          map2.setZoom(13);
+          updateDropoffLocation(place.geometry.location);
+        }
+      });
+
+      google.maps.event.addListener(map2, 'click', function (event) {
+        // Set the flag to true when the user manually clicks on the map
+        userInteraction = true;
+
+        marker2.setPosition(event.latLng);
+        updateDropoffLocation(event.latLng);
+      });
+
+      google.maps.event.addListener(marker2, 'dragend', function () {
+        // Set the flag to true when the user manually drags the marker
+        userInteraction = true;
+
+        var latLng = marker2.getPosition();
+        updateDropoffLocation(latLng);
+      });
+    }
+
+    function updateDropoffLocation(latLng) {
+      document.getElementById('dropoff_lat').value = latLng.lat();
+      document.getElementById('dropoff_long').value = latLng.lng();
+
+      // Generate URL and get address for the new marker position
+      var url = 'https://www.google.com/maps/search/?api=1&query=' + latLng.lat() + ',' + latLng.lng();
+      document.getElementById('dropoff_url').value = url;
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ 'location': latLng }, function (results, status) {
+        if (status === 'OK') {
+          if (results[0]) {
+            // Check the flag to determine whether to update the address
+            if (userInteraction) {
+              var addressComponents = results[0].address_components;
+              var address = '';
+              for (var i = 0; i < addressComponents.length; i++) {
+                var component = addressComponents[i];
+                if (component.types.includes('street_number') || component.types.includes('route')) {
+                  address += component.long_name + ' ';
+                } else if (component.types.includes('locality')) {
+                  address += component.long_name + ', ';
+                } else if (component.types.includes('administrative_area_level_1')) {
+                  address += component.long_name + ', ';
+                } else if (component.types.includes('country')) {
+                  address += component.long_name;
+                }
+              }
+              document.getElementById('dropoff_location').value = address;
+            }
+          } else {
+            console.log('No results found');
+          }
+        } else {
+          console.log('Geocoder failed due to: ' + status);
+        }
+      });
+    }
+
+    window.addEventListener('load', initDropoffMap);
+  </script>
+
+
+
+
 
 @endsection

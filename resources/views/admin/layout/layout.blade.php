@@ -24,7 +24,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- jQuery -->
 <script src="{{ url('admin/plugins/jquery/jquery.min.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMpiwwB9YcMoY8fKN_RZqruGkiEUr0E9o&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMpiwwB9YcMoY8fKN_RZqruGkiEUr0E9o&libraries=places&callback=initMap" async defer></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
