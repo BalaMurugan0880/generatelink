@@ -32,7 +32,7 @@
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>Appointment ID</th>
+                    {{-- <th>Appointment ID</th> --}}
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
@@ -44,6 +44,7 @@
                     <th>Vehicle Model</th>
                     <th>Drop-Off Location</th>
                     <th>Notes</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -51,7 +52,7 @@
                     @foreach ($filteredAppointments as $filteredAppointment)
                             <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $filteredAppointment['id'] }}</td>
+                            {{-- <td>{{ $filteredAppointment['id'] }}</td> --}}
                             <td>{{ isset($filteredAppointment['apt_date']) ? date('d/m/Y', strtotime($filteredAppointment['apt_date'])) : '-' }}</td>
                             <td>{{ $filteredAppointment['req_name'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['apt_time'] ?? '-' }} </td>
@@ -63,6 +64,7 @@
                             <td>{{ $filteredAppointment['vehicle_model'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['dropoff_location'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['special_notes'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment['status'] ?? '-' }}</td>
                             <td>
                                 <form action="{{ route('appointments.destroy',$filteredAppointment['id']) }}" method="POST">
 
@@ -83,7 +85,7 @@
                 <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Appointment ID</th>
+                    {{-- <th>Appointment ID</th> --}}
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
                     <th>Appointment Time</th>
@@ -95,6 +97,7 @@
                     <th>Vehicle Model</th>
                     <th>Drop-Off Location</th>
                     <th>Notes</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>

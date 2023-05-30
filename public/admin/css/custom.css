@@ -2,3 +2,7 @@
     color: rgb(180, 172, 172);
     margin-bottom:0px
 }
+
+.short-dropdown {
+    max-width: 200px;
+}

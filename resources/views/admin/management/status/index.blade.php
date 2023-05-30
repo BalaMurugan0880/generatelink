@@ -21,7 +21,22 @@
     <section class="content">
         <div class="container-fluid">
 
-            <table id="example1" class="table table-bordered table-striped">
+          <div class="status-filter mb-2">
+            <div class="d-flex align-items-center">
+                <label for="status" class="form-label me-2">Filter by Status : &nbsp;</label>
+                <div class="flex-grow-1">
+                    <select id="status" class="form-control short-dropdown" name="status">
+                        <option value="">All</option>
+                        <option value="Pending Approval">Pending Approval</option>
+                        <option value="Booking Confirmed">Booking Confirmed</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive table-responsive-sm">
+            <table id="statusTable" class="table table-bordered table-striped data-table">
                 <thead>
                 <tr>
                     <th>No</th>
@@ -55,7 +70,7 @@
                             <td>{{ $filteredAppointment['vehicle_model'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['dropoff_location'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['special_notes'] ?? '-' }}</td>
-                            <td>{{ $filteredAppointment['status'] ?? '-' }}</td>
+                            <td class="status">{{ $filteredAppointment['status'] ?? '-' }}</td>
                             <td>
                                 <form action="{{ route('appointments.destroy',$filteredAppointment['id']) }}" method="POST">
 
@@ -94,6 +109,7 @@
                 </tr>
                 </tfoot>
               </table>
+        </div>
 
             {!! $filteredAppointments->links() !!}
         </div>
@@ -194,5 +210,43 @@
 
 
   </script>
+
+<script>
+$(document).ready(function() {
+    // Initialize the DataTable with searching set to false
+    var dataTable = $('#statusTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'excel',
+            'csv',
+            'print',
+            'colvis'
+        ],
+        lengthChange: false
+        // Other options and configurations
+    });
+    var row = $('<div class="row"></div>').insertBefore('#statusTable_wrapper .dataTables_filter');
+    var buttonsCol = $('<div class="col-sm-12 col-md-6"></div>').appendTo(row);
+    var searchCol = $('<div class="col-sm-12 col-md-6"></div>').appendTo(row);
+
+    // Move the buttons container to the buttons column
+    dataTable.buttons().container().appendTo(buttonsCol);
+
+    // Move the search input to the search column
+    $('#statusTable_filter').appendTo(searchCol);
+
+    // Handle filter change event
+    $('#status').on('change', function() {
+        var status = $(this).val();
+
+        // Filter the datatable based on the selected status
+        dataTable.column(12).search(status).draw();
+    });
+});
+
+
+  </script>
+
+
 
 @endsection

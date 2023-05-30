@@ -21,7 +21,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+            <li class="nav-header">Modules</li>
               @php
               $menuItems = [
                   [
@@ -40,6 +40,12 @@
                       'route' => 'vehicle.index',
                       'icon' => 'far fa-circle text-danger',
                       'title' => 'Vehicle',
+                      'roles' => ['admin'],
+                  ],
+                  [
+                      'route' => 'users.index',
+                      'icon' => 'far fa-circle text-primary',
+                      'title' => 'Users',
                       'roles' => ['admin'],
                   ],
                   // Add more menu items as needed

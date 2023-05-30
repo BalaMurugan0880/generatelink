@@ -5,6 +5,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\ManageUsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'role:admin'], function () {
     Route::resource('status', StatusController::class);
     Route::resource('vehicle', VehicleController::class);
+    Route::resource('users', ManageUsersController::class);
     Route::post('/vehicle/import', [VehicleController::class, 'importData'])->name('vehicle.importData');
-
     Route::post('/status/{id}', [StatusController::class, 'update'])->name('status.update');
 
 });

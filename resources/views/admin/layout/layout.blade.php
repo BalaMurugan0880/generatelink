@@ -12,6 +12,7 @@
    <!-- DataTables -->
    <link rel="stylesheet" href="{{ url('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
    <link rel="stylesheet" href="{{ url('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+   <link rel="stylesheet" href="{{ url('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
    {{-- Toastr --}}
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
    <!-- overlayScrollbars -->
@@ -61,6 +62,14 @@
 <script src="{{ url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{ url('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{ url('admin/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{ url('admin/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{ url('admin/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ url('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
@@ -103,8 +112,8 @@
   $(function () {
     $('#example1').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "lengthChange": true,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
