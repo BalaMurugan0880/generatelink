@@ -30,7 +30,7 @@
 
             <div class="card card-warning mt-2">
                 <div class="card-body">
-                    <form action="{{ route('vehicle.importData') }}" method="POST">
+                    <form action="{{ route('vehicle.importData') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-sm-12">

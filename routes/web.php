@@ -32,6 +32,8 @@ Route::group(['middleware' => 'role:admin'], function () {
 
 Route::group(['middleware' => 'role:admin,customer'], function () {
     Route::resource('appointments', AppointmentController::class);
+    Route::get('/get-vehicle-models', [VehicleController::class, 'getVehicleModels']);
+
 });
 
 Route::get('/run-migration', function () {

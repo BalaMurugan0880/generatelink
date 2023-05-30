@@ -86,6 +86,9 @@
 <script src="{{ url('admin/plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
 <script src="{{ url('admin/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
 
+<!-- Select2 CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
 

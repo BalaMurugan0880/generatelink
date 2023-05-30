@@ -6,6 +6,8 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Vehicle;
+use App\Models\VehicleModel;
 class AppointmentController extends Controller
 {
     /**
@@ -23,7 +25,8 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return view('appointments.create');
+        $vehicleMakes = Vehicle::distinct('name')->get(['name']);
+        return view('appointments.create', compact('vehicleMakes'));
     }
 
     /**

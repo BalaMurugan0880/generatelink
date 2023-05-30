@@ -109,29 +109,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Vehicle Make</label>
-                                    <select name="vehicle_make" id="vehicle_make" class="form-control">
-                                        <option value="">-- Select Vehicle Make --</option>
-                                        <option value="Vehicle 1">Vehicle 1</option>
-                                        <option value="Vehicle 2">Vehicle 2</option>
-                                        <option value="Vehicle 3">Vehicle 3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Vehicle Model</label>
-                                    <select name="vehicle_model" id="vehicle_model" class="form-control">
-                                        <option value="">-- Select Vehicle Model --</option>
-                                        <option value="Model 1">Model 1</option>
-                                        <option value="Model 2">Model 2</option>
-                                        <option value="Model 3">Model 3</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label>Vehicle Make</label>
+                                  <select name="vehicle_make" id="vehicle_make" class="form-control select2">
+                                      <option value="">-- Select Vehicle Make --</option>
+                                      @foreach ($vehicleMakes as $make)
+                                          <option value="{{ $make->name }}">{{ $make->name }}</option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <label>Vehicle Model</label>
+                                  <select name="vehicle_model" id="vehicle_model" class="form-control select2" data-placeholder="-- Select Vehicle Model --">
+                                      <!-- Options will be dynamically loaded -->
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -166,6 +163,51 @@
 </div>
 
 </form>
+
+<script>
+  $(document).ready(function() {
+      // Initialize Select2 on the dropdowns
+      $('.select2').select2();
+
+      // Handle vehicle make change
+      $('#vehicle_make').on('change', function() {
+          var make = $(this).val();
+          if (make) {
+              $.ajax({
+                  url: '/get-vehicle-models',
+                  type: 'GET',
+                  data: { vehicle_make: make },
+                  dataType: 'json',
+                  success: function(response) {
+                      var options = '<option></option>'; // Add an empty option for the placeholder
+                      if (response.length > 0) {
+                          // Add options for each vehicle model
+                          $.each(response, function(index, model) {
+                              options += '<option value="' + model.name + '">' + model.name + '</option>';
+                          });
+                      } else {
+                          options += '<option value="">No vehicle models found</option>';
+                      }
+                      $('#vehicle_model').html(options);
+                      $('#vehicle_model').val(null).trigger('change'); // Reset the selected value
+                  },
+                  error: function() {
+                      $('#vehicle_model').html('<option></option>'); // Clear the options
+                      $('#vehicle_model').val(null).trigger('change'); // Reset the selected value
+                  }
+              });
+          } else {
+              $('#vehicle_model').html('<option></option>'); // Clear the options
+              $('#vehicle_model').val(null).trigger('change'); // Reset the selected value
+          }
+      });
+  });
+</script>
+
+
+
+
+
 
 {{-- Pick up Location Map --}}
 <script>
