@@ -42,6 +42,7 @@
                     <th>No</th>
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
+                    <th>Requester Email</th>
                     <th>Appointment Time</th>
                     <th>Pick Up Location</th>
                     <th>Customer Name</th>
@@ -61,6 +62,7 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ isset($filteredAppointment['apt_date']) ? date('d/m/Y', strtotime($filteredAppointment['apt_date'])) : '-' }}</td>
                             <td>{{ $filteredAppointment['req_name'] ?? '-' }}</td>
+                            <td>{{ $filteredAppointment->user->email ?? '-' }}</td>
                             <td>{{ $filteredAppointment['apt_time'] ?? '-' }} </td>
                             <td>{{ $filteredAppointment['pickup_location'] ?? '-' }}</td>
                             <td>{{ $filteredAppointment['customer_name'] ?? '-' }}</td>
@@ -95,6 +97,7 @@
                     <th>No</th>
                     <th>Appointment Date</th>
                     <th>Requester Name</th>
+                    <th>Requester Email</th>
                     <th>Appointment Time</th>
                     <th>Pick Up Location</th>
                     <th>Customer Name</th>

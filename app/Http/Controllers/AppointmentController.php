@@ -13,7 +13,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $filteredAppointments = Appointment::latest()->paginate(5);
+        $filteredAppointments = Appointment::with('user')->latest()->paginate(5);
         return view('appointments.index', compact('filteredAppointments'))->with('i', (request()->input('page', 1) - 1) * 5);
 
     }

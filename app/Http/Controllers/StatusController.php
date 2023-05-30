@@ -16,7 +16,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-         $filteredAppointments = Appointment::latest()->paginate(5);
+         $filteredAppointments = Appointment::with('user')->latest()->paginate(5);
          return view('admin.management.status.index', compact('filteredAppointments'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
