@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SourceController;
 
 
 /*
@@ -22,7 +23,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'role:admin'], function () {
     Route::resource('users', ManageUsersController::class);
-
+    Route::resource('sources', SourceController::class);
 });
 
 Route::group(['middleware' => 'role:admin,customer'], function () {

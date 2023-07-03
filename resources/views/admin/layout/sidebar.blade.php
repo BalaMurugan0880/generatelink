@@ -24,12 +24,19 @@
             <li class="nav-header">Modules</li>
               @php
               $menuItems = [
+                //   [
+                //       'route' => 'users.index',
+                //       'icon' => 'far fa-circle text-primary',
+                //       'title' => 'Users',
+                //       'roles' => ['admin'],
+                //   ],
                   [
-                      'route' => 'users.index',
+                      'route' => 'sources.index',
                       'icon' => 'far fa-circle text-primary',
-                      'title' => 'Users',
+                      'title' => 'Source',
                       'roles' => ['admin'],
                   ],
+                  
                   // Add more menu items as needed
               ];
               @endphp
