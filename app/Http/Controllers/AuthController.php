@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function showLoginForm()
 {
     if (Auth::check()) {
-        return redirect()->route('appointments.index');
+        return redirect()->route('dashboard');
     }
 
     return view('auth.login');
@@ -28,7 +28,7 @@ public function login(Request $request)
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-        return redirect()->route('appointments.index');
+        return redirect()->route('dashboard');
     } else {
         $errorMessage = 'Invalid email or password.';
         session()->flash('error', $errorMessage);

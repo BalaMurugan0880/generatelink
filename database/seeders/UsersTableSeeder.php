@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Profile;
 use App\Models\Role;
 class UsersTableSeeder extends Seeder
 {
@@ -25,14 +24,6 @@ class UsersTableSeeder extends Seeder
         $adminUser->role()->associate($adminRole);
         $adminUser->save();
 
-        $adminProfile = new Profile();
-        $adminProfile->user_id = $adminUser->id;
-        $adminProfile->designation = 'Tester';
-        $adminProfile->phone_number = '(60) 55-55555555';
-        $adminProfile->gender = 'male';
-        $adminProfile->dob = '25/05/1998';
-        $adminProfile->save();
-
         // Create Customer User
         $customerRole = Role::where('slug', 'customer')->first();
 
@@ -43,13 +34,5 @@ class UsersTableSeeder extends Seeder
         $customerUser->is_active = 1;
         $customerUser->role()->associate($customerRole);
         $customerUser->save();
-
-        $customerProfile = new Profile();
-        $customerProfile->user_id = $customerUser->id;
-        $customerProfile->designation = 'Tester';
-        $customerProfile->phone_number = '(60) 55-55555555';
-        $customerProfile->gender = 'male';
-        $customerProfile->dob = '25/08/1996';
-        $customerProfile->save();
     }
 }

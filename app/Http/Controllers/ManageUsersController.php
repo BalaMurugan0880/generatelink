@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Profile;
 use App\Models\Role;
+
 class ManageUsersController extends Controller
 {
     /**
@@ -14,7 +14,7 @@ class ManageUsersController extends Controller
     public function index()
     {
         // Fetch users with their profiles and roles
-        $users = User::with('profile', 'role')->get();
+        $users = User::with('role')->get();
 
         // dd($users);
 
@@ -55,14 +55,6 @@ class ManageUsersController extends Controller
         $customerUser->is_active = $request->status === 'on' ? 1 : 0;
         $customerUser->role()->associate($customerRole);
         $customerUser->save();
-
-        $customerProfile = new Profile();
-        $customerProfile->user_id = $customerUser->id;
-        $customerProfile->designation = $request->designation;
-        $customerProfile->phone_number = $request->phone_number;
-        $customerProfile->gender = $request->gender;
-        $customerProfile->dob = date('d/m/Y', strtotime($request->dob));
-        $customerProfile->save();
 
         if ($customerUser) {
             return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -113,13 +105,6 @@ class ManageUsersController extends Controller
         }
         $user->save();
 
-        // Update profile details
-        $profile = $user->profile;
-        $profile->designation = $request->designation;
-        $profile->phone_number = $request->phone_number;
-        $profile->gender = $request->gender;
-        $profile->dob = date('d/m/Y', strtotime($request->dob));
-        $profile->save();
 
         if ($profile) {
             return redirect()->route('users.index')->with('success', 'User updated successfully.');
@@ -134,11 +119,6 @@ class ManageUsersController extends Controller
      */
     public function destroy(User $user)
     {
-        // Delete associated appointments
-        $user->appointments()->delete();
-
-        // Delete associated profile
-        $user->profile()->delete();
 
         $user->delete();
 

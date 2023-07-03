@@ -1,9 +1,9 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="{{ route('appointments.index') }}" class="brand-link">
+  <a href="{{ route('dashboard') }}" class="brand-link">
       <img src="{{ url('admin/images/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Appointment System</span>
+      <span class="brand-text font-weight-light">Generate Link</span>
   </a>
 
   <!-- Sidebar -->
@@ -24,24 +24,6 @@
             <li class="nav-header">Modules</li>
               @php
               $menuItems = [
-                  [
-                      'route' => 'appointments.index',
-                      'icon' => 'far fa-circle text-info',
-                      'title' => 'Appointment',
-                      'roles' => ['admin', 'customer'],
-                  ],
-                  [
-                      'route' => 'status.index',
-                      'icon' => 'far fa-circle text-warning',
-                      'title' => 'Status',
-                      'roles' => ['admin'],
-                  ],
-                  [
-                      'route' => 'vehicle.index',
-                      'icon' => 'far fa-circle text-danger',
-                      'title' => 'Vehicle',
-                      'roles' => ['admin'],
-                  ],
                   [
                       'route' => 'users.index',
                       'icon' => 'far fa-circle text-primary',
