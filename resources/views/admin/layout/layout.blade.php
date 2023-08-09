@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Generate Link</title>
+  <title>Automated Form Testing</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ url('admin/plugins/fontawesome-free/css/all.min.css')}}">
@@ -23,9 +23,10 @@
   <link rel="stylesheet" href="{{ url('admin/css/custom.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  {{-- Switch Toogle Button  --}}
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <!-- jQuery -->
 <script src="{{ url('admin/plugins/jquery/jquery.min.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMpiwwB9YcMoY8fKN_RZqruGkiEUr0E9o&libraries=places&callback=initMap" async defer></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -75,6 +76,7 @@
 <!-- AdminLTE App -->
 <script src="{{ url('admin/js/adminlte.js')}}"></script>
 
+
 <!-- OPTIONAL SCRIPTS -->
 {{-- <script src="{{ url('admin/js/demo.js')}}"></script> --}}
  {{-- Toastr --}}
@@ -89,6 +91,7 @@
 <!-- Select2 CDN -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 
 

@@ -15,13 +15,4 @@ class Source extends Model
         'id', 'name'
     ];
 
-    public function media()
-    {
-        return $this->hasOne(Media::class);
-    }
-
-    public function link()
-    {
-        return $this->hasMany(Link::class);
-    }
 }
